@@ -1,0 +1,45 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion compile_sdk
+    buildToolsVersion build_tools
+
+    defaultConfig {
+        minSdkVersion minimum_sdk
+        targetSdkVersion target_sdk
+        versionCode version_code
+        versionName version_readable
+    }
+
+    signingConfigs {
+        release
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+        }
+    }
+
+    lintOptions {
+        abortOnError false
+    }
+
+    sourceSets {
+        main {
+            java.srcDirs += '../com.aware.plugin.esm.flexible/src/main/java'
+            res.srcDirs += '../com.aware.plugin.esm.flexible/src/main/res'
+            manifest.srcFile '../com.aware.plugin.esm.flexible/src/main/AndroidManifest.xml'
+        }
+    }
+}
+
+repositories {
+    maven { url 'https://jitpack.io' } //this allows library generation directly from GitHub source-code
+}
+
+dependencies {
+    api "com.github.denzilferreira:aware-client:$aware_libs"
+}
