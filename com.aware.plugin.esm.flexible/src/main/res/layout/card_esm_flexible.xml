@@ -7,7 +7,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Hello Android!"
-        android:id="@+id/hello"
+        android:text="ESM Flexible plugin running!"
+        android:id="@+id/tv_card"
         android:textColor="#000"/>
 </LinearLayout>

@@ -1,4 +1,3 @@
 <resources>
-    <string name="app_name">AWARE: Plugin Template</string>
-    <string name="plugin_template">Plugin: Template</string>
+    <string name="plugin_esm_flexible">Plugin: ESM Flexible</string>
 </resources>

@@ -1,0 +1,5 @@
+dependencies {
+    implementation "com.android.support:appcompat-v7:28.0.0"
+    implementation group: 'org.simpleframework', name: 'simple-xml', version: '2.7.1'
+    api project(':aware-core')
+}

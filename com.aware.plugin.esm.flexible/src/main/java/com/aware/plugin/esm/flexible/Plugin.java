@@ -1,59 +1,37 @@
 package com.aware.plugin.esm.flexible;
 
+import android.Manifest;
 import android.content.ContentResolver;
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
-
-import com.aware.Accelerometer;
+import android.util.Log;
 import com.aware.Aware;
 import com.aware.Aware_Preferences;
-import com.aware.Screen;
-import com.aware.plugin.esm.R;
+import com.aware.plugin.esm.flexible.R;
+import com.aware.ui.esms.ESMFactory;
 import com.aware.utils.Aware_Plugin;
+import com.aware.utils.Scheduler;
+
+import java.security.Provider;
 
 public class Plugin extends Aware_Plugin {
+
+    public static String ACTION_AWARE_ESM_FLEXIBLE = "action_aware_esm_flexble";
 
     @Override
     public void onCreate() {
         super.onCreate();
 
-        //This allows plugin data to be synced on demand from broadcast Aware#ACTION_AWARE_SYNC_DATA
-        AUTHORITY = Provider.getAuthority(this);
-
         TAG = "AWARE::" + getResources().getString(R.string.app_name);
 
-        /**
-         * Plugins share their current status, i.e., context using this method.
-         * This method is called automatically when triggering
-         * {@link Aware#ACTION_AWARE_CURRENT_CONTEXT}
-         **/
-        CONTEXT_PRODUCER = new ContextProducer() {
-            @Override
-            public void onContext() {
-                //Broadcast your context here
-            }
-        };
-
         //Add permissions you need (Android M+).
-        //By default, AWARE asks access to the #Manifest.permission.WRITE_EXTERNAL_STORAGE
-
-        //REQUIRED_PERMISSIONS.add(Manifest.permission.ACCESS_COARSE_LOCATION);
-    }
-
-    /**
-     * Allow callback to other applications when data is stored in provider
-     */
-    private static AWARESensorObserver awareSensor;
-    public static void setSensorObserver(AWARESensorObserver observer) {
-        awareSensor = observer;
-    }
-    public static AWARESensorObserver getSensorObserver() {
-        return awareSensor;
-    }
-
-    public interface AWARESensorObserver {
-        void onDataChanged(ContentValues data);
+        REQUIRED_PERMISSIONS.add(Manifest.permission.VIBRATE);
+        REQUIRED_PERMISSIONS.add(Manifest.permission.INTERNET);
+        REQUIRED_PERMISSIONS.add(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        REQUIRED_PERMISSIONS.add(Manifest.permission.WRITE_SYNC_SETTINGS);
     }
 
     //This function gets called every 5 minutes by AWARE to make sure this plugin is still running.
@@ -63,56 +41,38 @@ public class Plugin extends Aware_Plugin {
 
         if (PERMISSIONS_OK) {
 
+            //Check if the user has toggled the debug messages
             DEBUG = Aware.getSetting(this, Aware_Preferences.DEBUG_FLAG).equals("true");
 
             //Initialize our plugin's settings
-            Aware.setSetting(this, Settings.STATUS_PLUGIN_TEMPLATE, true);
-
-            /**
-             * Example of how to enable accelerometer sensing and how to access the data in real-time for your app.
-             * In this particular case, we are sending a broadcast that the ContextCard listens to and updates the UI in real-time.
-             */
-            Aware.startAccelerometer(this);
-            Accelerometer.setSensorObserver(new Accelerometer.AWARESensorObserver() {
-                @Override
-                public void onAccelerometerChanged(ContentValues contentValues) {
-                    sendBroadcast(new Intent("ACCELEROMETER_DATA").putExtra("data", contentValues));
+            if (Aware.getSetting(getApplicationContext(), Settings.STATUS_PLUGIN_ESM_FLEXIBLE).length() == 0) {
+                Aware.setSetting(getApplicationContext(), Settings.STATUS_PLUGIN_ESM_FLEXIBLE, true);
+            } else {
+                if (Aware.getSetting(getApplicationContext(), Settings.STATUS_PLUGIN_ESM_FLEXIBLE).equalsIgnoreCase("false")) {
+                    Aware.stopPlugin(getApplicationContext(), getPackageName());
+                    return START_STICKY;
                 }
-            });
+            }
 
-            Aware.startScreen(this);
-            Screen.setSensorObserver(new Screen.AWARESensorObserver() {
-                @Override
-                public void onScreenOn() {
+            //Remove notifications at database sync
+            Aware.setSetting(getApplicationContext(), Aware_Preferences.WEBSERVICE_SILENT, true);
 
+            //Start the ESM service
+            Aware.setSetting(getApplicationContext(), Aware_Preferences.STATUS_ESM, true, "com.aware.phone");
+
+            Log.d(TAG, "Plugin started");
+
+            //Setup questionnaires
+            String[] questionnaires = Aware.getSetting(getApplicationContext(), Settings.QUESTIONNAIRE_NAMES).split(",");
+            if(!questionnaires[0].equals("")) { // Do not make any questionnaire if the setting is empty
+                for (String questionnaire : questionnaires) {
+                    if (DEBUG) Log.v(TAG, "Creating questionnaire: " + questionnaire);
+                    ExecuterParams params = new ExecuterParams(this, questionnaire);
+                    ESMBuilderTask task = new ESMBuilderTask();
+                    task.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, params);
                 }
-
-                @Override
-                public void onScreenOff() {
-
-                }
-
-                @Override
-                public void onScreenLocked() {
-
-                }
-
-                @Override
-                public void onScreenUnlocked() {
-
-                }
-            });
-
-            //Enable our plugin's sync-adapter to upload the data to the server if part of a study
-            if (Aware.getSetting(this, Aware_Preferences.FREQUENCY_WEBSERVICE).length() >= 0 && !Aware.isSyncEnabled(this, Provider.getAuthority(this)) && Aware.isStudy(this) && getApplicationContext().getPackageName().equalsIgnoreCase("com.aware.phone") || getApplicationContext().getResources().getBoolean(R.bool.standalone)) {
-                ContentResolver.setIsSyncable(Aware.getAWAREAccount(this), Provider.getAuthority(this), 1);
-                ContentResolver.setSyncAutomatically(Aware.getAWAREAccount(this), Provider.getAuthority(this), true);
-                ContentResolver.addPeriodicSync(
-                        Aware.getAWAREAccount(this),
-                        Provider.getAuthority(this),
-                        Bundle.EMPTY,
-                        Long.parseLong(Aware.getSetting(this, Aware_Preferences.FREQUENCY_WEBSERVICE)) * 60
-                );
+            } else if (DEBUG) {
+                Log.i(TAG, "No questionnaires found");
             }
         }
 
@@ -123,13 +83,32 @@ public class Plugin extends Aware_Plugin {
     public void onDestroy() {
         super.onDestroy();
 
-        ContentResolver.setSyncAutomatically(Aware.getAWAREAccount(this), Provider.getAuthority(this), false);
-        ContentResolver.removePeriodicSync(
-                Aware.getAWAREAccount(this),
-                Provider.getAuthority(this),
-                Bundle.EMPTY
-        );
+        Aware.setSetting(this, Settings.STATUS_PLUGIN_ESM_FLEXIBLE, false);
+        Aware.setSetting(getApplicationContext(), Aware_Preferences.STATUS_ESM, false, "com.aware.phone");
 
-        Aware.setSetting(this, Settings.STATUS_PLUGIN_TEMPLATE, false);
+        Scheduler.clearSchedules(this);
+
+        Log.d(TAG, "Plugin stopped");
+    }
+
+    private static class ExecuterParams {
+        Context context;
+        String questionnaire;
+
+        ExecuterParams(Context context, String questionnaire) {
+            this.context = context;
+            this.questionnaire = questionnaire;
+        }
+    }
+
+    private static class ESMBuilderTask extends AsyncTask<ExecuterParams, Void, Void> {
+        @Override
+        protected Void doInBackground(ExecuterParams... params) {
+            Context context = params[0].context;
+            ESMFactory esmFactory = new ESMFactory();
+            String questionnaire = params[0].questionnaire;
+            new ESMBuilder().createESM(context, esmFactory, questionnaire);
+            return null;
+        }
     }
 }

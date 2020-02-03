@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xsd:schema elementFormDefault="qualified" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <xsd:element name="ESMDefinition">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="name" type="xsd:string">
+                    <xsd:annotation>
+                        <xsd:documentation>Name of the questionnaire</xsd:documentation>
+                    </xsd:annotation>
+                </xsd:element>
+                <xsd:element name="short_name" type="xsd:string">
+                    <xsd:annotation>
+                        <xsd:documentation>Name abbreviation</xsd:documentation>
+                    </xsd:annotation>
+                </xsd:element>
+                <xsd:element name="description" type="xsd:string" minOccurs="0">
+                    <xsd:annotation>
+                        <xsd:documentation>Description of the questionnaire (optional)</xsd:documentation>
+                    </xsd:annotation>
+                </xsd:element>
+                <xsd:element name="Question" type="xsd:element" maxOccurs="unbounded">
+                    <xsd:complexType>
+                        <xsd:sequence>
+                            <xsd:element name="ESM_Type" type="xsd:string">
+                                <xsd:annotation>
+                                    <xsd:documentation>Name of the ESM class in AWARE</xsd:documentation>
+                                </xsd:annotation>
+                            </xsd:element>
+                            <xsd:element name="Title" type="xsd:string">
+                                <xsd:annotation>
+                                    <xsd:documentation>Title of the ESM dialog</xsd:documentation>
+                                </xsd:annotation>
+                            </xsd:element>
+                            <xsd:element name="Instructions" type="xsd:string" minOccurs="0">
+                                <xsd:annotation>
+                                    <xsd:documentation>Text instructions (optional)</xsd:documentation>
+                                </xsd:annotation>
+                            </xsd:element>
+                            <xsd:element name="SubmitText" type="xsd:string" minOccurs="0">
+                                <xsd:annotation>
+                                    <xsd:documentation>Text of the submit button (optional, default: "OK")</xsd:documentation>
+                                </xsd:annotation>
+                            </xsd:element>
+                            <xsd:element name="CancelText" type="xsd:string" minOccurs="0">
+                                <xsd:annotation>
+                                    <xsd:documentation>Text of the cancel button (optional, default: "Cancel")</xsd:documentation>
+                                </xsd:annotation>
+                            </xsd:element>
+                            <xsd:element name="ExpirationThreshold" type="xsd:int" minOccurs="0">
+                                <xsd:annotation>
+                                    <xsd:documentation>Timeout for ESM expiration (optional, default: 0)</xsd:documentation>
+                                </xsd:annotation>
+                            </xsd:element>
+                            <xsd:element name="NotificationTimeout" type="xsd:int" minOccurs="0">
+                                <xsd:annotation>
+                                    <xsd:documentation>Timeout for notification expiration (optional, default: 0)</xsd:documentation>
+                                </xsd:annotation>
+                            </xsd:element>
+                            <xsd:element name="ScaleOptions" type="xsd:element" minOccurs="0">
+                                <xsd:annotation>
+                                    <xsd:documentation>Element for the scale options in case the ESM_Scale or ESM_Scale_Image is chosen (optional)</xsd:documentation>
+                                </xsd:annotation>
+                                <xsd:complexType>
+                                    <xsd:sequence>
+                                        <xsd:element name="ScaleStartRandom" type="xsd:boolean" minOccurs="0">
+                                            <xsd:annotation>
+                                                <xsd:documentation>Enable random starting value of the scale (optional, default: false)</xsd:documentation>
+                                            </xsd:annotation>
+                                        </xsd:element>
+                                        <xsd:element name="ScaleStartRandomValues" type="xsd:integer" minOccurs="0">
+                                            <xsd:annotation>
+                                                <xsd:documentation>Number of values for random starting of the scale within interval (optional, default: 0)</xsd:documentation>
+                                            </xsd:annotation>
+                                        </xsd:element>
+                                        <xsd:element name="ScaleStart" type="xsd:integer" minOccurs="0">
+                                            <xsd:annotation>
+                                                <xsd:documentation>Starting value of the scale (optional, default: 0)</xsd:documentation>
+                                            </xsd:annotation>
+                                        </xsd:element>
+                                        <xsd:element name="ScaleStep" type="xsd:integer" minOccurs="0">
+                                            <xsd:annotation>
+                                                <xsd:documentation>Value of each step of the scale (optional, default: 1)</xsd:documentation>
+                                            </xsd:annotation>
+                                        </xsd:element>
+                                        <xsd:element name="ScaleMin" type="xsd:integer" minOccurs="0">
+                                            <xsd:annotation>
+                                                <xsd:documentation>Minimum value of the scale (optional, default: 0)</xsd:documentation>
+                                            </xsd:annotation>
+                                        </xsd:element>
+                                        <xsd:element name="ScaleMinLabel" type="xsd:string" minOccurs="0">
+                                            <xsd:annotation>
+                                                <xsd:documentation>Label of the minimum value of the scale (optional, default: "")</xsd:documentation>
+                                            </xsd:annotation>
+                                        </xsd:element>
+                                        <xsd:element name="ScaleMax" type="xsd:integer" minOccurs="0">
+                                            <xsd:annotation>
+                                                <xsd:documentation>Maximum value of the scale (optional, default: 10)</xsd:documentation>
+                                            </xsd:annotation>
+                                        </xsd:element>
+                                        <xsd:element name="ScaleMaxLabel" type="xsd:string" minOccurs="0">
+                                            <xsd:annotation>
+                                                <xsd:documentation>Label of the maximum value of the scale (optional, default: "")</xsd:documentation>
+                                            </xsd:annotation>
+                                        </xsd:element>
+                                        <xsd:element name="ScaleValueVisibility" type="xsd:boolean" minOccurs="0">
+                                            <xsd:annotation>
+                                                <xsd:documentation>Enable scale value visibility (optional, default: false)</xsd:documentation>
+                                            </xsd:annotation>
+                                        </xsd:element>
+                                        <xsd:element name="LeftImageUrl" type="xsd:string" minOccurs="0">
+                                            <xsd:annotation>
+                                                <xsd:documentation>Url to left image (optional)</xsd:documentation>
+                                            </xsd:annotation>
+                                        </xsd:element>
+                                        <xsd:element name="RightImageUrl" type="xsd:string" minOccurs="0">
+                                            <xsd:annotation>
+                                                <xsd:documentation>Url to right image (optional)</xsd:documentation>
+                                            </xsd:annotation>
+                                        </xsd:element>
+                                    </xsd:sequence>
+                                </xsd:complexType>
+                            </xsd:element>
+                            <xsd:element name="Options" type="xsd:element" minOccurs="0">
+                                <xsd:annotation>
+                                    <xsd:documentation>Container for answer options in case the ESM is of type radio, checkbox (optional)</xsd:documentation>
+                                </xsd:annotation>
+                                <xsd:complexType>
+                                    <xsd:sequence>
+                                        <xsd:element name="Option" type="xsd:string" maxOccurs="unbounded">
+                                            <xsd:annotation>
+                                                <xsd:documentation>Answer option (unbounded)</xsd:documentation>
+                                            </xsd:annotation>
+                                        </xsd:element>
+                                    </xsd:sequence>
+                                </xsd:complexType>
+                            </xsd:element>
+                        </xsd:sequence>
+                    </xsd:complexType>
+                </xsd:element>
+                <xsd:element name="Schedule" type="xsd:element" minOccurs="0" maxOccurs="unbounded">
+                    <xsd:annotation>
+                        <xsd:documentation>Schedule for the test to be executed (optional, unbounded)</xsd:documentation>
+                    </xsd:annotation>
+                    <xsd:complexType>
+                        <xsd:sequence>
+                            <xsd:element name="id" type="xsd:string">
+                                <xsd:annotation>
+                                    <xsd:documentation>Name of the schedule</xsd:documentation>
+                                </xsd:annotation>
+                            </xsd:element>
+                            <xsd:element name="hour" type="xsd:int" minOccurs="0" maxOccurs="unbounded">
+                                <xsd:annotation>
+                                    <xsd:documentation>hour(s) at which to activate the schedule (optional, unbounded)</xsd:documentation>
+                                </xsd:annotation>
+                            </xsd:element>
+                            <xsd:element name="minute" type="xsd:int" minOccurs="0" maxOccurs="unbounded">
+                                <xsd:annotation>
+                                    <xsd:documentation>minute(s) at which to activate the schedule (optional, unbounded)</xsd:documentation>
+                                </xsd:annotation>
+                            </xsd:element>
+                            <xsd:element name="weekday" type="xsd:string" minOccurs="0" maxOccurs="unbounded">
+                                <xsd:annotation>
+                                    <xsd:documentation>weekday(s) at which to activate the schedule (optional, unbounded)</xsd:documentation>
+                                </xsd:annotation>
+                            </xsd:element>
+                            <xsd:element name="month" type="xsd:string" minOccurs="0" maxOccurs="unbounded">
+                                <xsd:annotation>
+                                    <xsd:documentation>month at which to activate the schedule (optional, unbounded)</xsd:documentation>
+                                </xsd:annotation>
+                            </xsd:element>
+                            <xsd:element name="random" type="xsd:boolean" minOccurs="0">
+                                <xsd:annotation>
+                                    <xsd:documentation>random schedule within interval (optional)</xsd:documentation>
+                                </xsd:annotation>
+                            </xsd:element>
+                            <xsd:element name="amount" type="xsd:int" minOccurs="0">
+                                <xsd:annotation>
+                                    <xsd:documentation>amount of schedules if random (optional, default: 1)</xsd:documentation>
+                                </xsd:annotation>
+                            </xsd:element>
+                            <xsd:element name="interval" type="xsd:int" minOccurs="0">
+                                <xsd:annotation>
+                                    <xsd:documentation>minimum interval between random schedules (optional, default: 0)</xsd:documentation>
+                                </xsd:annotation>
+                            </xsd:element>
+                        </xsd:sequence>
+                    </xsd:complexType>
+                </xsd:element>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+</xsd:schema>

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ESMDefinition xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="file:///ESMDefinition.xsd">
+    <name>Example questionnaire</name>
+    <short_name>EQ</short_name>
+    <description>
+        Example questionnaire for debugging the ESM Flexible plugin
+    </description>
+    <Question>
+        <ESM_Type>ESM_Scale_Image</ESM_Type>
+        <Title>Example 1</Title>
+        <Instructions>This is a likert scale with slider with pseudo-random start in 5 positions</Instructions>
+        <SubmitText>Send</SubmitText>
+        <CancelText>Cancel</CancelText>
+        <ScaleOptions>
+            <ScaleStartRandom>true</ScaleStartRandom>
+            <ScaleStartRandomValues>5</ScaleStartRandomValues>
+            <ScaleStep>1</ScaleStep>
+            <ScaleMin>0</ScaleMin>
+            <ScaleMinLabel>Min</ScaleMinLabel>
+            <ScaleMax>100</ScaleMax>
+            <ScaleMaxLabel>Max</ScaleMaxLabel>
+            <ScaleValueVisibility>true</ScaleValueVisibility>
+            <LeftImageUrl>
+                http://atcproyectos.ugr.es/cbailon/img/ic_valence_low_black.png
+            </LeftImageUrl>
+            <RightImageUrl>
+                http://atcproyectos.ugr.es/cbailon/img/ic_valence_high_black.png
+            </RightImageUrl>
+        </ScaleOptions>
+    </Question>
+    <Question>
+        <ESM_Type>ESM_Scale_Image</ESM_Type>
+        <Title>Example 2</Title>
+        <Instructions>This is a likert scale with slider with random start</Instructions>
+        <SubmitText>Send</SubmitText>
+        <CancelText>Cancel</CancelText>
+        <ScaleOptions>
+            <ScaleStartRandom>true</ScaleStartRandom>
+            <ScaleStep>1</ScaleStep>
+            <ScaleMin>0</ScaleMin>
+            <ScaleMinLabel>Min</ScaleMinLabel>
+            <ScaleMax>100</ScaleMax>
+            <ScaleMaxLabel>Max</ScaleMaxLabel>
+            <ScaleValueVisibility>true</ScaleValueVisibility>
+            <LeftImageUrl>
+                http://atcproyectos.ugr.es/cbailon/img/ic_arousal_low_black.png
+            </LeftImageUrl>
+            <RightImageUrl>
+                http://atcproyectos.ugr.es/cbailon/img/ic_arousal_high_black.png
+            </RightImageUrl>
+        </ScaleOptions>
+    </Question>
+    <Schedule>
+        <id>fixed</id>
+        <hour>8</hour>
+        <minute>27</minute>
+        <minute>29</minute>
+    </Schedule>
+    <Schedule>
+        <id>fixed2</id>
+        <hour>20</hour>
+        <minute>26</minute>
+        <minute>27</minute>
+    </Schedule>
+    <Schedule>
+        <id>random</id>
+        <hour>10</hour>
+        <random>true</random>
+        <amount>2</amount>
+        <interval>30</interval>
+    </Schedule>
+</ESMDefinition>
