@@ -15,10 +15,12 @@ public class Settings extends PreferenceActivity implements SharedPreferences.On
     //Plugin settings in XML @xml/preferences
     public static final String STATUS_PLUGIN_ESM_FLEXIBLE = "status_plugin_esm_flexible";
     public static final String QUESTIONNAIRE_NAMES = "questionnaire_names";
+    public static final String MANUAL_TRIGGER_QUESTIONNAIRE = "manual_trigger_questionnaire";
 
     //Plugin settings UI elements
     private static CheckBoxPreference status;
     private static EditTextPreference questionnaireNames;
+    private static EditTextPreference manualTriggerQuestionnaire;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,12 +36,14 @@ public class Settings extends PreferenceActivity implements SharedPreferences.On
 
         status = (CheckBoxPreference) findPreference(STATUS_PLUGIN_ESM_FLEXIBLE);
         questionnaireNames = (EditTextPreference) findPreference(QUESTIONNAIRE_NAMES);
+        manualTriggerQuestionnaire = (EditTextPreference) findPreference(MANUAL_TRIGGER_QUESTIONNAIRE);
 
         if( Aware.getSetting(this, STATUS_PLUGIN_ESM_FLEXIBLE).length() == 0 ) {
             Aware.setSetting( this, STATUS_PLUGIN_ESM_FLEXIBLE, true ); //by default, the setting is true on install
         }
         status.setChecked(Aware.getSetting(getApplicationContext(), STATUS_PLUGIN_ESM_FLEXIBLE).equals("true"));
         questionnaireNames.setText(Aware.getSetting(getApplicationContext(), QUESTIONNAIRE_NAMES));
+        manualTriggerQuestionnaire.setText(Aware.getSetting(getApplicationContext(), MANUAL_TRIGGER_QUESTIONNAIRE));
     }
 
     @Override
@@ -54,6 +58,11 @@ public class Settings extends PreferenceActivity implements SharedPreferences.On
         if (setting.getKey().equals(QUESTIONNAIRE_NAMES)) {
             Aware.setSetting(getApplicationContext(), key, sharedPreferences.getString(key, null));
             questionnaireNames.setText(Aware.getSetting(getApplicationContext(), QUESTIONNAIRE_NAMES));
+        }
+
+        if (setting.getKey().equals(MANUAL_TRIGGER_QUESTIONNAIRE)) {
+            Aware.setSetting(getApplicationContext(), key, sharedPreferences.getString(key, null));
+            manualTriggerQuestionnaire.setText(Aware.getSetting(getApplicationContext(), MANUAL_TRIGGER_QUESTIONNAIRE));
         }
 
         if (Aware.getSetting(this, STATUS_PLUGIN_ESM_FLEXIBLE).equals("true")) {

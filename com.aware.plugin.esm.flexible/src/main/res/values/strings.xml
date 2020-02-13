@@ -1,3 +1,5 @@
 <resources>
     <string name="plugin_esm_flexible">Plugin: ESM Flexible</string>
+    <string name="bt_trigger">Trigger questionnaire</string>
+    <string name="tv_text">Click to trigger the questionnaire</string>
 </resources>

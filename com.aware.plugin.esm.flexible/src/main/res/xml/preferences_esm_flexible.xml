@@ -12,9 +12,16 @@
 
     <EditTextPreference
         android:key="questionnaire_names"
-        android:title="Questionnaire Names"
+        android:title="Questionnaire names"
         android:persistent="true"
         android:summary="Comma separated list of questionnaires to run"
+        android:inputType="text" />
+
+    <EditTextPreference
+        android:key="manual_trigger_questionnaire"
+        android:title="Manual trigger questionnaire"
+        android:persistent="true"
+        android:summary="Name of questionnaire enabled for manual trigger"
         android:inputType="text" />
 
 </PreferenceScreen>

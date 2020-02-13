@@ -1,11 +1,24 @@
 package com.aware.plugin.esm.flexible;
 
 import android.content.Context;
+import android.database.Cursor;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
+import com.aware.Aware;
+import com.aware.ESM;
+import com.aware.providers.Scheduler_Provider;
+import com.aware.ui.esms.ESMFactory;
 import com.aware.utils.IContextCard;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.net.ConnectException;
 
 public class ContextCard implements IContextCard {
 
@@ -13,15 +26,47 @@ public class ContextCard implements IContextCard {
     public ContextCard() {
     }
 
-    private TextView mTitleTextView = null;
-
     @Override
-    public View getContextCard(Context context) {
+    public View getContextCard(final Context context) {
         //Load card layout
         View card = LayoutInflater.from(context).inflate(R.layout.card_esm_flexible, null);
-        mTitleTextView = card.findViewById(R.id.tv_card);
+
+        //Manually trigger questionnaire
+        Button manualTrigger = card.findViewById(R.id.bt_trigger);
+        manualTrigger.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Cursor _schedules = context.getContentResolver().query(Scheduler_Provider.Scheduler_Data.CONTENT_URI, null, Scheduler_Provider.Scheduler_Data.SCHEDULE_ID + " NOT LIKE 'schedule_aware%' AND " + Scheduler_Provider.Scheduler_Data.PACKAGE_NAME + " LIKE '" + context.getPackageName() + "'", null, null);
+                triggerQuestionnaire(context, _schedules);
+            }
+        });
 
         //Return the card to AWARE/apps
         return card;
+    }
+
+    private void triggerQuestionnaire(Context context, Cursor schedules) {
+        String questionnaire = Aware.getSetting(context, Settings.MANUAL_TRIGGER_QUESTIONNAIRE);
+        if (!questionnaire.equals("") && schedules != null && schedules.moveToFirst()) {
+            Log.d("Plugin: ESM Flexible", "Manually triggering "+questionnaire+"...");
+            do {
+                try {
+                    JSONObject schedule = new JSONObject(schedules.getString(schedules.getColumnIndex("schedule")));
+                    if (schedule.getJSONObject("schedule").getJSONObject("action").getString("class").equals(Plugin.ACTION_AWARE_ESM_FLEXIBLE)) {
+                        JSONArray queue = new JSONArray(schedule.getJSONObject("schedule").getJSONObject("action").getJSONArray("extras").getJSONObject(0).getString("extra_value"));
+                        String trigger = queue.getJSONObject(0).getJSONObject("esm").getString("esm_trigger");
+                        if (trigger.equals(questionnaire)) {
+                            ESM.queueESM(context, queue.toString());
+                            break;
+                        }
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            } while (schedules.moveToNext());
+            schedules.close();
+        } else {
+            Log.d("Plugin: ESM Flexible", "There are no questionnaires to trigger");
+        }
     }
 }
