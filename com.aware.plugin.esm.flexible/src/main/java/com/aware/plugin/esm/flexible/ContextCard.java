@@ -56,6 +56,9 @@ public class ContextCard implements IContextCard {
                         JSONArray queue = new JSONArray(schedule.getJSONObject("schedule").getJSONObject("action").getJSONArray("extras").getJSONObject(0).getString("extra_value"));
                         String trigger = queue.getJSONObject(0).getJSONObject("esm").getString("esm_trigger");
                         if (trigger.equals(questionnaire)) {
+                            for (int i=0; i<queue.length(); i++) {
+                                queue.getJSONObject(i).getJSONObject("esm").put("esm_trigger", "Manual trigger - " + trigger);
+                            }
                             ESM.queueESM(context, queue.toString());
                             break;
                         }
