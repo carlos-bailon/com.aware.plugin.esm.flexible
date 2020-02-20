@@ -32,6 +32,7 @@ android {
             java.srcDirs += '../com.aware.plugin.esm.flexible/src/main/java'
             res.srcDirs += '../com.aware.plugin.esm.flexible/src/main/res'
             manifest.srcFile '../com.aware.plugin.esm.flexible/src/main/AndroidManifest.xml'
+            assets.srcDirs += '../com.aware.plugin.esm.flexible/src/main/assets'
         }
     }
 
