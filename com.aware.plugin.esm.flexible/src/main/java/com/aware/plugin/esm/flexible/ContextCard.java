@@ -3,10 +3,12 @@ package com.aware.plugin.esm.flexible;
 import android.content.Context;
 import android.database.Cursor;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.aware.Aware;
 import com.aware.ESM;
@@ -69,6 +71,9 @@ public class ContextCard implements IContextCard {
             } while (schedules.moveToNext());
             schedules.close();
         } else {
+            Toast toast = Toast.makeText(context, R.string.manual_trigger_toast, Toast.LENGTH_SHORT);
+            toast.setGravity(Gravity.CENTER,0,0);
+            toast.show();
             Log.d("Plugin: ESM Flexible", "There are no questionnaires to trigger");
         }
     }
