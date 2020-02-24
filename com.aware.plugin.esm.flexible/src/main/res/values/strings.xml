@@ -2,5 +2,6 @@
     <string name="plugin_esm_flexible">Plugin: ESM Flexible</string>
     <string name="manual_trigger_button">Trigger questionnaire</string>
     <string name="manual_trigger_text">Click to trigger the questionnaire</string>
-    <string name="manual_trigger_toast">There are no questionnaires to trigger</string>
+    <string name="manual_trigger_toast_empty">There are no questionnaires to trigger</string>
+    <string name="manual_trigger_toast_notfound">The questionnaire was not found</string>
 </resources>

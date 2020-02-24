@@ -14,7 +14,9 @@ import com.aware.Aware;
 import com.aware.ESM;
 import com.aware.providers.Scheduler_Provider;
 import com.aware.ui.esms.ESMFactory;
+import com.aware.ui.esms.ESM_Question;
 import com.aware.utils.IContextCard;
+import com.aware.utils.Scheduler;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -48,20 +50,22 @@ public class ContextCard implements IContextCard {
     }
 
     private void triggerQuestionnaire(Context context, Cursor schedules) {
+        boolean found = false;
         String questionnaire = Aware.getSetting(context, Settings.MANUAL_TRIGGER_QUESTIONNAIRE);
         if (!questionnaire.equals("") && schedules != null && schedules.moveToFirst()) {
             Log.d("Plugin: ESM Flexible", "Manually triggering "+questionnaire+"...");
             do {
                 try {
-                    JSONObject schedule = new JSONObject(schedules.getString(schedules.getColumnIndex("schedule")));
-                    if (schedule.getJSONObject("schedule").getJSONObject("action").getString("class").equals(Plugin.ACTION_AWARE_ESM_FLEXIBLE)) {
-                        JSONArray queue = new JSONArray(schedule.getJSONObject("schedule").getJSONObject("action").getJSONArray("extras").getJSONObject(0).getString("extra_value"));
-                        String trigger = queue.getJSONObject(0).getJSONObject("esm").getString("esm_trigger");
+                    JSONObject schedule = new JSONObject(schedules.getString(schedules.getColumnIndex(Scheduler_Provider.Scheduler_Data.SCHEDULE)));
+                    if (schedule.getJSONObject("schedule").getJSONObject(Scheduler.SCHEDULE_ACTION).getString(Scheduler.ACTION_CLASS).equals(Plugin.ACTION_AWARE_ESM_FLEXIBLE)) {
+                        JSONArray queue = new JSONArray(schedule.getJSONObject("schedule").getJSONObject(Scheduler.SCHEDULE_ACTION).getJSONArray(Scheduler.ACTION_EXTRAS).getJSONObject(0).getString(Scheduler.ACTION_EXTRA_VALUE));
+                        String trigger = queue.getJSONObject(0).getJSONObject(ESM.EXTRA_ESM).getString(ESM_Question.esm_trigger);
                         if (trigger.equals(questionnaire)) {
                             for (int i=0; i<queue.length(); i++) {
-                                queue.getJSONObject(i).getJSONObject("esm").put("esm_trigger", "Manual trigger - " + trigger);
+                                queue.getJSONObject(i).getJSONObject(ESM.EXTRA_ESM).put(ESM_Question.esm_trigger, "Manual trigger - " + trigger);
                             }
                             ESM.queueESM(context, queue.toString());
+                            found = true;
                             break;
                         }
                     }
@@ -70,8 +74,14 @@ public class ContextCard implements IContextCard {
                 }
             } while (schedules.moveToNext());
             schedules.close();
+            if (!found) {
+                Toast toast = Toast.makeText(context, R.string.manual_trigger_toast_notfound, Toast.LENGTH_SHORT);
+                toast.setGravity(Gravity.CENTER,0,0);
+                toast.show();
+                Log.d("Plugin: ESM Flexible", "The questionnaire was not found");
+            }
         } else {
-            Toast toast = Toast.makeText(context, R.string.manual_trigger_toast, Toast.LENGTH_SHORT);
+            Toast toast = Toast.makeText(context, R.string.manual_trigger_toast_empty, Toast.LENGTH_SHORT);
             toast.setGravity(Gravity.CENTER,0,0);
             toast.show();
             Log.d("Plugin: ESM Flexible", "There are no questionnaires to trigger");
