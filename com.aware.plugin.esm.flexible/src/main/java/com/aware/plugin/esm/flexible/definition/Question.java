@@ -34,6 +34,9 @@ public class Question {
     @Element(name = "ScaleOptions", required = false)
     private ScaleOptions ScOptions;
 
+    @Element(name = "LikertOptions", required = false)
+    private LikertOptions LikOptions;
+
     @ElementList(name= "Options", required = false)
     private List<String> options;
 
@@ -96,6 +99,10 @@ public class Question {
     public ScaleOptions getScaleOptions() { return ScOptions; }
 
     public void setScaleOptions(ScaleOptions scOptions) { ScOptions = scOptions; }
+
+    public LikertOptions getLikertOptions() { return LikOptions; }
+
+    public void setScaleOptions(LikertOptions likOptions) { LikOptions = likOptions; }
 
     public void setOptions(List<String> options) {
         this.options = options;

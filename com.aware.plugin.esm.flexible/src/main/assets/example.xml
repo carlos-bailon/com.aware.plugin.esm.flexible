@@ -19,7 +19,7 @@
             <ScaleMinLabel>Min</ScaleMinLabel>
             <ScaleMax>100</ScaleMax>
             <ScaleMaxLabel>Max</ScaleMaxLabel>
-            <ScaleValueVisibility>true</ScaleValueVisibility>
+            <ScaleValueVisible>true</ScaleValueVisible>
             <LeftImageUrl>
                 http://atcproyectos.ugr.es/cbailon/img/ic_valence_low_black.png
             </LeftImageUrl>
@@ -41,7 +41,7 @@
             <ScaleMinLabel>Min</ScaleMinLabel>
             <ScaleMax>100</ScaleMax>
             <ScaleMaxLabel>Max</ScaleMaxLabel>
-            <ScaleValueVisibility>true</ScaleValueVisibility>
+            <ScaleValueVisible>true</ScaleValueVisible>
             <LeftImageUrl>
                 http://atcproyectos.ugr.es/cbailon/img/ic_arousal_low_black.png
             </LeftImageUrl>

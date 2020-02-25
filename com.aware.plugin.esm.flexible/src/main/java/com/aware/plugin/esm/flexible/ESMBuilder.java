@@ -4,6 +4,7 @@ import android.content.Context;
 import android.util.Log;
 
 import com.aware.ESM;
+import com.aware.plugin.esm.flexible.definition.LikertOptions;
 import com.aware.plugin.esm.flexible.definition.Question;
 import com.aware.plugin.esm.flexible.definition.ScaleOptions;
 import com.aware.plugin.esm.flexible.definition.Schedule;
@@ -11,6 +12,7 @@ import com.aware.plugin.esm.flexible.definition.ESMDefinition;
 
 import com.aware.ui.esms.ESMFactory;
 import com.aware.ui.esms.ESM_Checkbox;
+import com.aware.ui.esms.ESM_Likert;
 import com.aware.ui.esms.ESM_Question;
 import com.aware.ui.esms.ESM_QuickAnswer;
 import com.aware.ui.esms.ESM_Radio;
@@ -120,9 +122,19 @@ public class ESMBuilder {
                         ((ESM_ScaleImage) esm).setScaleMax(scaleOptions.getScaleMax());
                         ((ESM_ScaleImage) esm).setScaleMaxLabel(scaleOptions.getScaleMaxLabel());
                         ((ESM_ScaleImage) esm).setScaleStartRandom(scaleOptions.isScaleStartRandom());
-                        ((ESM_ScaleImage) esm).setValueVisibility(scaleOptions.isScaleValueVisibile());
+                        ((ESM_ScaleImage) esm).setScaleValueVisible(scaleOptions.isScaleValueVisible());
                         if(scaleOptions.getLeftImageUrl() != null) ((ESM_ScaleImage) esm).setLeftImageUrl(scaleOptions.getLeftImageUrl());
                         if(scaleOptions.getRightImageUrl() != null) ((ESM_ScaleImage) esm).setRightImageUrl(scaleOptions.getRightImageUrl());
+                    }
+
+                    //Additional settings for ESM_Likert
+                    if (esm instanceof ESM_Likert) {
+                        LikertOptions likertOptions = question.getLikertOptions();
+
+                        ((ESM_Likert) esm).setLikertMax(likertOptions.getLikertMax());
+                        ((ESM_Likert) esm).setLikertStep(likertOptions.getLikertStep());
+                        ((ESM_Likert) esm).setLikertMinLabel(likertOptions.getLikertMinLabel());
+                        ((ESM_Likert) esm).setLikertMaxLabel(likertOptions.getLikertMaxLabel());
                     }
 
                     //Additional settings for ESM_Checkbox, ESM_Radio and ESM_QuickAnswer

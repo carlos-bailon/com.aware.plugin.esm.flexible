@@ -30,8 +30,8 @@ public class ScaleOptions {
     @Element(name = "ScaleMaxLabel", required = false)
     private String scaleMaxLabel;
 
-    @Element(name = "ScaleValueVisibility", required = false)
-    private boolean scaleValueVisibile;
+    @Element(name = "ScaleValueVisible", required = false)
+    private boolean scaleValueVisible;
 
     @Element(name = "LeftImageUrl", required = false)
     private String leftImageUrl;
@@ -103,12 +103,12 @@ public class ScaleOptions {
         this.scaleMaxLabel = scaleMaxLabel;
     }
 
-    public boolean isScaleValueVisibile() {
-        return scaleValueVisibile;
+    public boolean isScaleValueVisible() {
+        return scaleValueVisible;
     }
 
-    public void setScaleValueVisibile(boolean scaleValueVisibile) {
-        this.scaleValueVisibile = scaleValueVisibile;
+    public void setScaleValueVisible(boolean scaleValueVisible) {
+        this.scaleValueVisible = scaleValueVisible;
     }
 
     public String getLeftImageUrl() {

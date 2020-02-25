@@ -102,7 +102,7 @@
                                                 <xsd:documentation>Label of the maximum value of the scale (optional, default: "")</xsd:documentation>
                                             </xsd:annotation>
                                         </xsd:element>
-                                        <xsd:element name="ScaleValueVisibility" type="xsd:boolean" minOccurs="0">
+                                        <xsd:element name="ScaleValueVisible" type="xsd:boolean" minOccurs="0">
                                             <xsd:annotation>
                                                 <xsd:documentation>Enable scale value visibility (optional, default: false)</xsd:documentation>
                                             </xsd:annotation>
@@ -115,6 +115,35 @@
                                         <xsd:element name="RightImageUrl" type="xsd:string" minOccurs="0">
                                             <xsd:annotation>
                                                 <xsd:documentation>Url to right image (optional)</xsd:documentation>
+                                            </xsd:annotation>
+                                        </xsd:element>
+                                    </xsd:sequence>
+                                </xsd:complexType>
+                            </xsd:element>
+                            <xsd:element name="LikertOptions" type="xsd:element" minOccurs="0">
+                                <xsd:annotation>
+                                    <xsd:documentation>Element for the likert options in case the ESM_Likert is chosen (optional)</xsd:documentation>
+                                </xsd:annotation>
+                                <xsd:complexType>
+                                    <xsd:sequence>
+                                        <xsd:element name="LikertMax" type="xsd:integer" minOccurs="0">
+                                            <xsd:annotation>
+                                                <xsd:documentation>Maximum value of the scale (optional, default: 10)</xsd:documentation>
+                                            </xsd:annotation>
+                                        </xsd:element>
+                                        <xsd:element name="LikertStep" type="xsd:integer" minOccurs="0">
+                                            <xsd:annotation>
+                                                <xsd:documentation>Value of each step of the scale (optional, default: 1)</xsd:documentation>
+                                            </xsd:annotation>
+                                        </xsd:element>
+                                        <xsd:element name="LikertMinLabel" type="xsd:string" minOccurs="0">
+                                            <xsd:annotation>
+                                                <xsd:documentation>Label of the minimum value of the scale (optional, default: "")</xsd:documentation>
+                                            </xsd:annotation>
+                                        </xsd:element>
+                                        <xsd:element name="LikertMaxLabel" type="xsd:string" minOccurs="0">
+                                            <xsd:annotation>
+                                                <xsd:documentation>Label of the maximum value of the scale (optional, default: "")</xsd:documentation>
                                             </xsd:annotation>
                                         </xsd:element>
                                     </xsd:sequence>
