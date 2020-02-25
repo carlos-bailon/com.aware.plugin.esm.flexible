@@ -14,7 +14,7 @@ import com.aware.ui.esms.ESM_Checkbox;
 import com.aware.ui.esms.ESM_Question;
 import com.aware.ui.esms.ESM_QuickAnswer;
 import com.aware.ui.esms.ESM_Radio;
-import com.aware.ui.esms.ESM_Scale_Image;
+import com.aware.ui.esms.ESM_ScaleImage;
 import com.aware.utils.Scheduler;
 
 import org.json.JSONException;
@@ -108,21 +108,21 @@ public class ESMBuilder {
                     esm.setSubmitButton(question.getSubmitText());
                     esm.setCancelButton(question.getCancelText());
 
-                    //Additional settings for ESM_Scale_Image
-                    if (esm instanceof ESM_Scale_Image) {
+                    //Additional settings for ESM_ScaleImage
+                    if (esm instanceof ESM_ScaleImage) {
                         ScaleOptions scaleOptions = question.getScaleOptions();
 
-                        if (!scaleOptions.isScaleStartRandom()) ((ESM_Scale_Image) esm).setScaleStart(scaleOptions.getScaleStart());
-                        ((ESM_Scale_Image) esm).setScaleStartRandomValues(scaleOptions.getScaleStartRandomValues());
-                        ((ESM_Scale_Image) esm).setScaleStep(scaleOptions.getScaleStep());
-                        ((ESM_Scale_Image) esm).setScaleMin(scaleOptions.getScaleMin());
-                        ((ESM_Scale_Image) esm).setScaleMinLabel(scaleOptions.getScaleMinLabel());
-                        ((ESM_Scale_Image) esm).setScaleMax(scaleOptions.getScaleMax());
-                        ((ESM_Scale_Image) esm).setScaleMaxLabel(scaleOptions.getScaleMaxLabel());
-                        ((ESM_Scale_Image) esm).setScaleStartRandom(scaleOptions.isScaleStartRandom());
-                        ((ESM_Scale_Image) esm).setValueVisibility(scaleOptions.isScaleValueVisibile());
-                        if(scaleOptions.getLeftImageUrl() != null) ((ESM_Scale_Image) esm).setLeftImageUrl(scaleOptions.getLeftImageUrl());
-                        if(scaleOptions.getRightImageUrl() != null) ((ESM_Scale_Image) esm).setRightImageUrl(scaleOptions.getRightImageUrl());
+                        if (!scaleOptions.isScaleStartRandom()) ((ESM_ScaleImage) esm).setScaleStart(scaleOptions.getScaleStart());
+                        ((ESM_ScaleImage) esm).setScaleStartRandomValues(scaleOptions.getScaleStartRandomValues());
+                        ((ESM_ScaleImage) esm).setScaleStep(scaleOptions.getScaleStep());
+                        ((ESM_ScaleImage) esm).setScaleMin(scaleOptions.getScaleMin());
+                        ((ESM_ScaleImage) esm).setScaleMinLabel(scaleOptions.getScaleMinLabel());
+                        ((ESM_ScaleImage) esm).setScaleMax(scaleOptions.getScaleMax());
+                        ((ESM_ScaleImage) esm).setScaleMaxLabel(scaleOptions.getScaleMaxLabel());
+                        ((ESM_ScaleImage) esm).setScaleStartRandom(scaleOptions.isScaleStartRandom());
+                        ((ESM_ScaleImage) esm).setValueVisibility(scaleOptions.isScaleValueVisibile());
+                        if(scaleOptions.getLeftImageUrl() != null) ((ESM_ScaleImage) esm).setLeftImageUrl(scaleOptions.getLeftImageUrl());
+                        if(scaleOptions.getRightImageUrl() != null) ((ESM_ScaleImage) esm).setRightImageUrl(scaleOptions.getRightImageUrl());
                     }
 
                     //Additional settings for ESM_Checkbox, ESM_Radio and ESM_QuickAnswer

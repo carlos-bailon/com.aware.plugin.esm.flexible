@@ -58,7 +58,7 @@
                             </xsd:element>
                             <xsd:element name="ScaleOptions" type="xsd:element" minOccurs="0">
                                 <xsd:annotation>
-                                    <xsd:documentation>Element for the scale options in case the ESM_Scale or ESM_Scale_Image is chosen (optional)</xsd:documentation>
+                                    <xsd:documentation>Element for the scale options in case the ESM_Scale or ESM_ScaleImage is chosen (optional)</xsd:documentation>
                                 </xsd:annotation>
                                 <xsd:complexType>
                                     <xsd:sequence>

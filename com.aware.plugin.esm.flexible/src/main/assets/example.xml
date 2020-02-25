@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <ESMDefinition xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="file:///ESMDefinition.xsd">
-    <name>Example questionnaire</name>
+    <name>Example</name>
     <short_name>EQ</short_name>
     <description>
         Example questionnaire for debugging the ESM Flexible plugin
     </description>
     <Question>
-        <ESM_Type>ESM_Scale_Image</ESM_Type>
+        <ESM_Type>ESM_ScaleImage</ESM_Type>
         <Title>Example 1</Title>
         <Instructions>This is a likert scale with slider with pseudo-random start in 5 positions</Instructions>
         <SubmitText>Send</SubmitText>
@@ -29,7 +29,7 @@
         </ScaleOptions>
     </Question>
     <Question>
-        <ESM_Type>ESM_Scale_Image</ESM_Type>
+        <ESM_Type>ESM_ScaleImage</ESM_Type>
         <Title>Example 2</Title>
         <Instructions>This is a likert scale with slider with random start</Instructions>
         <SubmitText>Send</SubmitText>
