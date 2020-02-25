@@ -13,6 +13,7 @@ import android.widget.Toast;
 import com.aware.Aware;
 import com.aware.ESM;
 import com.aware.providers.Scheduler_Provider;
+import com.aware.ui.ESM_Queue;
 import com.aware.ui.esms.ESMFactory;
 import com.aware.ui.esms.ESM_Question;
 import com.aware.utils.IContextCard;
@@ -64,7 +65,15 @@ public class ContextCard implements IContextCard {
                             for (int i=0; i<queue.length(); i++) {
                                 queue.getJSONObject(i).getJSONObject(ESM.EXTRA_ESM).put(ESM_Question.esm_trigger, "Manual trigger - " + trigger);
                             }
-                            ESM.queueESM(context, queue.toString());
+                            if (ESM_Queue.getQueueSize(context) == 0) {
+                                ESM.queueESM(context, queue.toString());
+                            // There are already queued ESMs
+                            } else {
+                                Toast toast = Toast.makeText(context, R.string.manual_trigger_toast_queue, Toast.LENGTH_SHORT);
+                                toast.setGravity(Gravity.CENTER,0,0);
+                                toast.show();
+                                Log.d("Plugin: ESM Flexible", "Already queued ESMs, cannot queue more");
+                            }
                             found = true;
                             break;
                         }
@@ -74,12 +83,14 @@ public class ContextCard implements IContextCard {
                 }
             } while (schedules.moveToNext());
             schedules.close();
+            // The required questionnaire is not scheduled in the database
             if (!found) {
                 Toast toast = Toast.makeText(context, R.string.manual_trigger_toast_notfound, Toast.LENGTH_SHORT);
                 toast.setGravity(Gravity.CENTER,0,0);
                 toast.show();
                 Log.d("Plugin: ESM Flexible", "The questionnaire was not found");
             }
+        // Manual trigger setting is empty
         } else {
             Toast toast = Toast.makeText(context, R.string.manual_trigger_toast_empty, Toast.LENGTH_SHORT);
             toast.setGravity(Gravity.CENTER,0,0);

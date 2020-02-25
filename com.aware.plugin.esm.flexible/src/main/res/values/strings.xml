@@ -4,4 +4,5 @@
     <string name="manual_trigger_text">Click to trigger the questionnaire</string>
     <string name="manual_trigger_toast_empty">There are no questionnaires to trigger</string>
     <string name="manual_trigger_toast_notfound">The questionnaire was not found</string>
+    <string name="manual_trigger_toast_queue">Please answer already existing questionnaires before triggering a new one</string>
 </resources>
