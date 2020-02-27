@@ -16,6 +16,7 @@ import com.aware.ui.esms.ESM_Likert;
 import com.aware.ui.esms.ESM_Question;
 import com.aware.ui.esms.ESM_QuickAnswer;
 import com.aware.ui.esms.ESM_Radio;
+import com.aware.ui.esms.ESM_Scale;
 import com.aware.ui.esms.ESM_ScaleImage;
 import com.aware.utils.Scheduler;
 
@@ -109,6 +110,18 @@ public class ESMBuilder {
                     esm.setInstructions(question.getInstructions());
                     esm.setSubmitButton(question.getSubmitText());
                     esm.setCancelButton(question.getCancelText());
+
+                    //Additional settings for ESM_Scale
+                    if (esm instanceof ESM_Scale) {
+                        ScaleOptions scaleOptions = question.getScaleOptions();
+
+                        ((ESM_Scale) esm).setScaleStart(scaleOptions.getScaleStart());
+                        ((ESM_Scale) esm).setScaleStep(scaleOptions.getScaleStep());
+                        ((ESM_Scale) esm).setScaleMin(scaleOptions.getScaleMin());
+                        ((ESM_Scale) esm).setScaleMinLabel(scaleOptions.getScaleMinLabel());
+                        ((ESM_Scale) esm).setScaleMax(scaleOptions.getScaleMax());
+                        ((ESM_Scale) esm).setScaleMaxLabel(scaleOptions.getScaleMaxLabel());
+                    }
 
                     //Additional settings for ESM_ScaleImage
                     if (esm instanceof ESM_ScaleImage) {
