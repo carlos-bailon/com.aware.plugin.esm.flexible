@@ -18,6 +18,9 @@ import com.aware.ui.esms.ESM_QuickAnswer;
 import com.aware.ui.esms.ESM_Radio;
 import com.aware.ui.esms.ESM_Scale;
 import com.aware.ui.esms.ESM_ScaleImage;
+import com.aware.utils.Http;
+import com.aware.utils.Https;
+import com.aware.utils.SSLManager;
 import com.aware.utils.Scheduler;
 
 import org.json.JSONException;
@@ -26,8 +29,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
 
 public class ESMBuilder {
 
@@ -43,28 +44,38 @@ public class ESMBuilder {
         this.context = context;
         this.factory = factory;
         ESMDefinition questionnaire = null;
-        if (File.startsWith("http://") || File.startsWith("https://")) { // remote configuration file
+        if (File.startsWith("http://")) { // remote configuration file with HTTP
             try {
                 Log.v(LOG_TAG,"Trying to connect to url: "+File);
-                URL url = new URL(File);
-                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-                connection.setRequestMethod("GET");
-                connection.connect();
-                if (connection.getResponseCode() == HttpURLConnection.HTTP_OK) {
+                String serialized = new Http().dataGET(File, false);
+                if (serialized != null) {
                     Log.v(LOG_TAG,"Connected to url");
-                    InputStream is = connection.getInputStream();
-                    questionnaire = ESMDeserializer.deserializeXml(getStringFromInputStream(is));
+                    questionnaire = ESMDeserializer.deserializeXml(serialized);
                     Log.v(LOG_TAG,"XML deserialized");
                 } else {
-                    Log.e(LOG_TAG,"Error connection to url: "+connection.getResponseCode()+ " " + connection.getResponseMessage());
+                    Log.i(LOG_TAG,"XML is null cannot deserialize");
                 }
             } catch (Exception e) {
                 e.printStackTrace();
             }
-
-        } else {
+        } else if (File.startsWith("https://")) { // remote configuration file with HTTPS
             try {
-                Log.v(LOG_TAG,"Looking for file in local folder"); // local configuration file
+                Log.v(LOG_TAG,"Trying to connect to url: "+File);
+                SSLManager.handleUrl(context, File, true);
+                String serialized = new Https(SSLManager.getHTTPS(context, File)).dataGET(File, false);
+                if (serialized != null) {
+                    Log.v(LOG_TAG,"Connected to url");
+                    questionnaire = ESMDeserializer.deserializeXml(serialized);
+                    Log.v(LOG_TAG,"XML deserialized");
+                } else {
+                    Log.i(LOG_TAG,"XML is null cannot deserialize");
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else {
+            try { // local configuration file
+                Log.v(LOG_TAG,"Looking for file in local folder");
                 InputStream is = context.getApplicationContext().getAssets().open(File);
                 questionnaire = ESMDeserializer.deserializeXml(getStringFromInputStream(is));
                 Log.v(LOG_TAG,"XML deserialized");
