@@ -66,7 +66,7 @@ public class ContextCard implements IContextCard {
                                 queue.getJSONObject(i).getJSONObject(ESM.EXTRA_ESM).put(ESM_Question.esm_trigger, "Manual trigger - " + trigger);
                             }
                             if (ESM_Queue.getQueueSize(context) == 0) {
-                                ESM.queueESM(context, queue.toString());
+                                ESM.queueESM(context, queue.toString(), false, true);
                             // There are already queued ESMs
                             } else {
                                 Toast toast = Toast.makeText(context, R.string.manual_trigger_toast_queue, Toast.LENGTH_SHORT);
