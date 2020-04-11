@@ -54,9 +54,6 @@ public class Plugin extends Aware_Plugin {
                 }
             }
 
-            //Remove notifications at database sync
-            Aware.setSetting(getApplicationContext(), Aware_Preferences.WEBSERVICE_SILENT, true);
-
             //Start the ESM service
             Aware.setSetting(getApplicationContext(), Aware_Preferences.STATUS_ESM, true, "com.aware.phone");
 
