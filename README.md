@@ -1,7 +1,7 @@
 AWARE Plugin: ESM Flexible
 ==========================
 
-This plugin allows you to configure ESM questionnaires from a configuration file retrieved either from the own APK or from a remote location. The configuration file is written in XML and structured following the ESM_Definition schema.
+This plugin allows you to configure ESM questionnaires from a local or remote configuration file. The configuration file is written in XML and structured following the ESM_Definition schema.
 
 The ESM card enables manual trigger of a selected questionnaire.
 
