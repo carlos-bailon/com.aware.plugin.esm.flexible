@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="manual_trigger_button">Responder cuestionario</string>
+    <string name="manual_trigger_text">Haga click para responder</string>
+    <string name="manual_trigger_toast_empty">No hay ningún cuestionario disponible</string>
+    <string name="manual_trigger_toast_notfound">No se encontró el cuestionario</string>
+    <string name="manual_trigger_toast_queue">Por favor, responda al cuestionario actual antes de lanzar uno nuevo</string>
+</resources>

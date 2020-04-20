@@ -25,7 +25,7 @@ public class Plugin extends Aware_Plugin {
     public void onCreate() {
         super.onCreate();
 
-        TAG = "AWARE::" + getResources().getString(R.string.plugin_esm_flexible);
+        TAG = "AWARE::ESM Flexible";
 
         //Add permissions you need (Android M+).
         REQUIRED_PERMISSIONS.add(Manifest.permission.VIBRATE);
@@ -83,7 +83,7 @@ public class Plugin extends Aware_Plugin {
         Aware.setSetting(this, Settings.STATUS_PLUGIN_ESM_FLEXIBLE, false);
         Aware.setSetting(getApplicationContext(), Aware_Preferences.STATUS_ESM, false, "com.aware.phone");
 
-        Scheduler.clearSchedules(this);
+        //Scheduler.clearSchedules(this);
 
         Log.d(TAG, "Plugin stopped");
     }
