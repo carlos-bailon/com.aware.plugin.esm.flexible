@@ -19,6 +19,9 @@ public class Question {
     @Element(name = "Instructions", required = false)
     private String Instructions;
 
+    @Element(name = "Locale", required = false)
+    private String Locale;
+
     @Element(name = "SubmitText", required = false)
     private String SubmitText;
 
@@ -62,6 +65,14 @@ public class Question {
 
     public void setInstructions(String instructions) {
         Instructions = instructions;
+    }
+
+    public String getLocale() {
+        return Locale;
+    }
+
+    public void setLocale(String locale) {
+        this.Locale = locale;
     }
 
     public String getSubmitText() {

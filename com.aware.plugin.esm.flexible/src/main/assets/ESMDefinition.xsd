@@ -36,6 +36,11 @@
                                     <xsd:documentation>Text instructions (optional)</xsd:documentation>
                                 </xsd:annotation>
                             </xsd:element>
+                            <xsd:element name="Locale" type="xsd:string" minOccurs="0">
+                                <xsd:annotation>
+                                    <xsd:documentation>Language of the question (optional)</xsd:documentation>
+                                </xsd:annotation>
+                            </xsd:element>
                             <xsd:element name="SubmitText" type="xsd:string" minOccurs="0">
                                 <xsd:annotation>
                                     <xsd:documentation>Text of the submit button (optional, default: "OK")</xsd:documentation>
