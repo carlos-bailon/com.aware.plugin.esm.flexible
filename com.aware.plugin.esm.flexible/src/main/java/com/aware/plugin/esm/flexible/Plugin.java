@@ -25,7 +25,7 @@ public class Plugin extends Aware_Plugin {
     public void onCreate() {
         super.onCreate();
 
-        TAG = "AWARE::ESM Flexible";
+        TAG = "AWARE::" + getResources().getString(R.string.plugin_esm_flexible);
 
         //Add permissions you need (Android M+).
         REQUIRED_PERMISSIONS.add(Manifest.permission.VIBRATE);

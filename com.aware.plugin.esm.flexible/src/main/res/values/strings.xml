@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="plugin_esm_flexible">Plugin: ESM Flexible</string>
     <string name="manual_trigger_button">Trigger questionnaire</string>
     <string name="manual_trigger_text">Click to trigger the questionnaire</string>
     <string name="manual_trigger_toast_empty">There are no questionnaires to trigger</string>

@@ -151,7 +151,8 @@ public class ESMBuilder {
                         esm.setTitle(question.getTitle())
                                 .setTrigger(questionnaire.getName())
                                 .setExpirationThreshold(question.getExpirationThreshold())
-                                .setNotificationTimeout(question.getNotificationTimeout());
+                                .setNotificationTimeout(question.getNotificationTimeout())
+                                .setReplaceQueue(true);
 
                         //Additional ESM settings
                         question.setInstructions(question.getInstructions().replace("\n", "").replace("\r", ""));
